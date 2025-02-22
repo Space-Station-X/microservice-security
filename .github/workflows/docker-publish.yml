@@ -8,6 +8,11 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_URL_DB: ${{ secrets.PUBLIC_URL_DB }}
+      PUBLIC_USER: ${{ secrets.PUBLIC_USER }}
+      PUBLIC_PASSWORD: ${{ secrets.PUBLIC_PASSWORD }}
+      EUREKA_SERVER: ${{ secrets.EUREKA_SERVER }}
 
     steps:
       - name: Checkout repository
