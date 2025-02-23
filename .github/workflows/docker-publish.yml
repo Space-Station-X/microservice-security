@@ -39,5 +39,5 @@ jobs:
       - name: Push Docker image
         run: docker push raydberg25/microservice-security:0.0.1-SNAPSHOT
 
-      - name: Trigger Render Deploy
-        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK}}"
+#      - name: Trigger Render Deploy
+#        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK}}"
