@@ -74,6 +74,11 @@ public class CommandInitializerConfig implements CommandLineRunner {
                     .password(passwordEncoder.encode("password2"))
                     .roles(Set.of(userRole))
                     .build();
+            AuthEntity user3 = AuthEntity.builder()
+                    .email("rayd@gmail.com")
+                    .password(passwordEncoder.encode("2005"))
+                    .roles(Set.of(userRole))
+                    .build();
 
             userRepository.save(admin);
             userRepository.save(user1);
