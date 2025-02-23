@@ -38,6 +38,13 @@ jobs:
 
       - name: Push Docker image
         run: docker push raydberg25/microservice-security:0.0.1-SNAPSHOT
+      - name: Install Koyeb CLI
+        run: |
+              curl -sSL https://koyeb.com/install.sh | sh
+      - name: Redeploy service on Koyeb
+        run: koyeb service redeploy biological-natalee/microservice-security
+        env:
+         KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
 
 #      - name: Trigger Render Deploy
 #        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK}}"
