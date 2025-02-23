@@ -45,6 +45,6 @@ jobs:
           echo "${HOME}/.koyeb/bin" >> $GITHUB_PATH
 
       - name: Redeploy service on Koyeb
-        run: koyeb service redeploy biological-natalee/microservice-security
+        run: koyeb service redeploy biological-natalee/microservice-security --token $KOYEB_API_TOKEN
         env:
-          KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
+         KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
