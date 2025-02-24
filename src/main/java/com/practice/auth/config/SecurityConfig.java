@@ -41,7 +41,7 @@ public class SecurityConfig  {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login/**", "/oauth2/**").permitAll()
+                        .requestMatchers("/api/v1/auth/login").permitAll()
                         .anyRequest().permitAll()
                 )
                 //.oauth2Login(oauth2 -> oauth2.defaultSuccessUrl("/hello", true))
