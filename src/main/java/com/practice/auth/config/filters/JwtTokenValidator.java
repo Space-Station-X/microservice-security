@@ -32,32 +32,27 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if ("/api/v1/auth/login".equals(request.getServletPath())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
+        String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
             jwtToken = jwtToken.substring(7);
-
-
             try {
                 DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
-
-
                 String username = jwtUtils.extractUsername(decodedJWT);
-
                 String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
+                Collection<? extends GrantedAuthority> authorities =
+                        AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
 
-
-                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
-
-
-                SecurityContext securityContext = SecurityContextHolder.getContext();
-                Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
-                securityContext.setAuthentication(authentication);
-                SecurityContextHolder.setContext(securityContext);
+                Authentication authentication =
+                        new UsernamePasswordAuthenticationToken(username, null, authorities);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
 
             } catch (Exception e) {
-
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
@@ -65,4 +60,5 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
 }
