@@ -38,11 +38,12 @@ public class JwtTokenValidator extends OncePerRequestFilter {
         if ("/api/v1/auth/login".equals(path)
                 || path.startsWith("/swagger-ui")
                 || path.startsWith("/swagger-ui.html")
-                || path.startsWith("/v3/api-docs")) {
+                || path.startsWith("/v3/api-docs")
+                || path.startsWith("/microservice-users/swagger-ui")
+                || path.startsWith("/microservice-users/swagger-ui.html")) {
             filterChain.doFilter(request, response);
             return;
         }
-
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
