@@ -32,7 +32,13 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if ("/api/v1/auth/login".equals(request.getServletPath())) {
+        String path = request.getServletPath();
+
+        // Excluir endpoints de autenticación y Swagger de la validación
+        if ("/api/v1/auth/login".equals(path)
+                || path.startsWith("/swagger-ui")
+                || path.startsWith("/swagger-ui.html")
+                || path.startsWith("/v3/api-docs")) {
             filterChain.doFilter(request, response);
             return;
         }
