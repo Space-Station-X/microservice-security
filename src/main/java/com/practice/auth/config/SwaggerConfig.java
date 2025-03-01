@@ -33,7 +33,7 @@ import org.springframework.http.HttpHeaders;
                 ),
                 @Server(
                         description = "Production Server",
-                        url = "http://localhost:9090"
+                        url = "https://biological-natalee-raydberg25-4c59dc23.koyeb.app"
                 )
         }
         /*security = @SecurityRequirement(
